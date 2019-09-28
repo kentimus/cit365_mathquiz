@@ -27,9 +27,6 @@ namespace MathQuiz
         // keeps track of time left on the timer
         int timeLeft;
 
-        // add date to dateLabel
-        DateTime today = DateTime.Now;
-
         /// <summary>
         /// Start the quiz by filling in all of the problems and start the timer
         /// </summary>
@@ -72,7 +69,7 @@ namespace MathQuiz
             timeLeft = 30;
             timeLabel.Text = "30 seconds";
             timer1.Start();
-            timeLabel.BackColor = Color.White;
+            timeLabel.ForeColor = Color.White;
         }
 
         
@@ -84,6 +81,12 @@ namespace MathQuiz
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+            string todaysDate = DateTime.Now.ToString("dd MMMM yyyy");
+            datePlaceholderLabel.Text = todaysDate;
+        }
+
+        private void DatePlaceholderLabel_Click(object sender, EventArgs e)
         {
 
         }
@@ -114,7 +117,7 @@ namespace MathQuiz
 
                 if (timeLeft <= 5)
                 {
-                    timeLabel.BackColor = Color.Red;
+                    timeLabel.ForeColor = Color.Red;
                 }
             }
             else
@@ -137,17 +140,50 @@ namespace MathQuiz
         /// <returns>True is answer is correct, false if answer is wrong</returns>
         private bool CheckTheAnswer()
         {
-            if((addend1 + addend2 == sum.Value)
-                && (minuend - subtrahend == difference.Value)
-                && (multiplicand * multiplier == product.Value)
-                && (dividend / divisor == quotient.Value))
+            bool everythingCorrect = true;
+
+            if (addend1 + addend2 == sum.Value)
             {
-                return true;
+                sum.BackColor = Color.Yellow;
             }
             else
             {
-                return false;
+                sum.BackColor = Color.White;
+                everythingCorrect = false;
             }
+
+            if (minuend - subtrahend == difference.Value)
+            {
+                difference.BackColor = Color.Yellow;
+            }
+            else
+            {
+                difference.BackColor = Color.White;
+                everythingCorrect = false;
+            }
+
+            if(multiplicand * multiplier == product.Value)
+            {
+                product.BackColor = Color.Yellow;
+            }
+            else
+            {
+                product.BackColor = Color.White;
+                everythingCorrect = false;
+            }
+
+            if(dividend / divisor == quotient.Value)
+            {
+                quotient.BackColor = Color.Yellow;
+            }
+            else
+            {
+                quotient.BackColor = Color.White;
+                everythingCorrect = false;
+            }
+
+
+            return everythingCorrect;
         }
 
         private void answer_Enter(object sender, EventArgs e)
